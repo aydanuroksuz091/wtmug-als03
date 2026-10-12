@@ -124,7 +124,22 @@ function getLocationWeather() {
   navigator.geolocation.getCurrentPosition(
     async (pos) => {
       const { latitude, longitude } = pos.coords;
-      await getWeather(latitude, longitude, "Konumunuz");
+
+      let placeName = "Konumunuz";
+      try {
+        const reverseUrl = `https://geocoding-api.open-meteo.com/v1/search?latitude=${latitude}&longitude=${longitude}&language=tr&count=1`;
+        const res = await fetch(reverseUrl);
+        const data = await res.json();
+
+        if (data.results && data.results.length > 0) {
+          const r = data.results[0];
+          placeName = r.admin1 ? `${r.name}, ${r.admin1}` : r.name;
+        }
+      } catch (e) {
+        console.warn("Ters geocoding başarısız:", e);
+      }
+
+      await getWeather(latitude, longitude, placeName);
       showLoading(false);
     },
     (err) => {
@@ -138,7 +153,6 @@ function getLocationWeather() {
     { enableHighAccuracy: true, timeout: 10000 }
   );
 }
-
 // ====== Hava Durumu Verisi Çek ======
 async function getWeather(lat, lon, placeName) {
   try {
