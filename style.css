@@ -1,0 +1,530 @@
+/* ====== Renk Paleti ====== */
+:root {
+  --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  --card: rgba(255, 255, 255, 0.95);
+  --card-glass: rgba(255, 255, 255, 0.7);
+  --text: #1a1a2e;
+  --subtext: #555;
+  --accent: #ff6b9d;
+  --accent-2: #4ecdc4;
+  --accent-3: #ffd93d;
+  --border: rgba(255, 255, 255, 0.3);
+  --shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+  --shadow-hover: 0 12px 40px rgba(31, 38, 135, 0.35);
+}
+
+/* ====== Koyu Mod ====== */
+body.dark {
+  --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  --card: rgba(30, 30, 50, 0.85);
+  --card-glass: rgba(40, 40, 60, 0.7);
+  --text: #f5f5f5;
+  --subtext: #b0b0c0;
+  --accent: #ff6b9d;
+  --accent-2: #4ecdc4;
+  --accent-3: #ffd93d;
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.7);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ====== Body: Renkli Gradient + Animasyon ====== */
+body {
+  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg-gradient);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  color: var(--text);
+  min-height: 100vh;
+  transition: color 0.4s;
+  position: relative;
+  overflow-x: hidden;
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Uçuşan yıldızlar / parçacıklar efekti */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+}
+
+body::before {
+  background: #ff6b9d;
+  top: -100px;
+  left: -100px;
+  animation: float 20s ease-in-out infinite;
+}
+
+body::after {
+  background: #4ecdc4;
+  bottom: -100px;
+  right: -100px;
+  animation: float 25s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(60px, -60px) scale(1.2); }
+}
+
+/* ====== Header ====== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: var(--card-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ff6b9d, #4ecdc4, #ffd93d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% auto;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  to { background-position: 200% center; }
+}
+
+#themeToggle {
+  background: linear-gradient(135deg, #ff6b9d, #ffd93d);
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 10px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 107, 157, 0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#themeToggle:hover {
+  transform: scale(1.1) rotate(20deg);
+  box-shadow: 0 6px 25px rgba(255, 107, 157, 0.7);
+}
+
+/* ====== Main ====== */
+main {
+  padding: 20px 16px;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ====== Çevrimdışı Bandı ====== */
+.offline-banner {
+  background: linear-gradient(90deg, #ff4757, #ff6348);
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  animation: pulse 2s ease-in-out infinite;
+  position: relative;
+  z-index: 5;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.8; }
+}
+
+/* ====== Arama Alanı ====== */
+.search-section {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  background: var(--card);
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
+
+#cityInput {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--text);
+  transition: border 0.3s, background 0.3s;
+}
+
+body.dark #cityInput {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+#cityInput:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+body.dark #cityInput:focus {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+#searchBtn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff6b9d, #ff8fab);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#searchBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.6);
+}
+
+#searchBtn:active {
+  transform: scale(0.95);
+}
+
+#locationBtn {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #4ecdc4, #44a3a0);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#locationBtn:hover {
+  transform: translateY(-2px) rotate(5deg);
+  box-shadow: 0 6px 20px rgba(78, 205, 196, 0.6);
+}
+
+#locationBtn:active {
+  transform: scale(0.95);
+}
+
+/* ====== Hata ====== */
+.error {
+  background: linear-gradient(135deg, #ffebee, #ffcdd2);
+  color: #c62828;
+  padding: 14px 16px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  border-left: 5px solid #c62828;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(198, 40, 40, 0.2);
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100%   { transform: translateX(0); }
+  20%, 60%   { transform: translateX(-8px); }
+  40%, 80%   { transform: translateX(8px); }
+}
+
+body.dark .error {
+  background: linear-gradient(135deg, #3a1a1a, #4a2020);
+  color: #ff8a80;
+}
+
+/* ====== Loading ====== */
+.loading {
+  text-align: center;
+  padding: 30px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.loading::after {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ====== Güncel Hava Durumu ====== */
+.current-weather {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(20px);
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: slideUp 0.5s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.current-weather::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent, rgba(255, 107, 157, 0.1), transparent);
+  animation: rotate 10s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotate {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.current-weather:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.current-weather h2 {
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.current-main {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.current-main img {
+  width: 90px;
+  height: 90px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
+  animation: bob 3s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+.current-temp {
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ff6b9d, #ffd93d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.desc {
+  color: var(--subtext);
+  margin: 12px 0 16px;
+  text-transform: capitalize;
+  font-size: 1.05rem;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+
+/* ====== Detay Kartları (Nem / Rüzgâr) ====== */
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.detail-card {
+  background: linear-gradient(135deg, rgba(78, 205, 196, 0.15), rgba(255, 107, 157, 0.15));
+  padding: 16px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px solid var(--border);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+
+.detail-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(78, 205, 196, 0.3);
+}
+
+.detail-card .label {
+  font-size: 0.85rem;
+  color: var(--subtext);
+  font-weight: 500;
+}
+
+.detail-card span:last-child {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent-2);
+}
+
+body.dark .detail-card span:last-child {
+  color: var(--accent-2);
+}
+
+/* ====== Son Güncelleme ====== */
+.update-time {
+  margin-top: 16px;
+  font-size: 0.8rem;
+  color: var(--subtext);
+  text-align: right;
+  position: relative;
+  z-index: 1;
+  font-style: italic;
+}
+
+/* ====== 5 Günlük Tahmin ====== */
+.forecast {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(20px);
+  animation: slideUp 0.6s ease-out;
+}
+
+.forecast h3 {
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  background: linear-gradient(135deg, #4ecdc4, #ff6b9d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.forecast-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.forecast-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.08), rgba(78, 205, 196, 0.08));
+  border: 1px solid transparent;
+  transition: transform 0.3s, border 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+
+.forecast-item:hover {
+  transform: translateX(6px);
+  border-color: var(--accent);
+  box-shadow: 0 4px 15px rgba(255, 107, 157, 0.25);
+}
+
+.forecast-item .day {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.forecast-item img,
+.forecast-item > span:nth-child(2) {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+.forecast-item .temps {
+  font-size: 0.95rem;
+  color: var(--subtext);
+}
+
+.forecast-item .max {
+  color: #ff6b9d;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.forecast-item .min {
+  color: #4ecdc4;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* ====== Yardımcı ====== */
+.hidden {
+  display: none !important;
+}
+
+/* ====== Yumuşak Tema Geçişi ====== */
+body, header, .current-weather, .forecast, .detail-card, .search-section {
+  transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* ====== Mobil ====== */
+@media (max-width: 400px) {
+  .current-temp { font-size: 2.8rem; }
+  header h1 { font-size: 1.15rem; }
+  main { padding: 16px 12px; }
+  .current-weather, .forecast { padding: 18px; }
+}
+
+/* ====== Scrollbar (Webkit) ====== */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ff6b9d, #4ecdc4);
+  border-radius: 10px;
+}

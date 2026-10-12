@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1e88e5" />
+  <title>Hava Durumu PWA</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="icons/icon-192.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+</head>
+<body>
+  <header>
+    <h1>🌤️ Hava Durumu</h1>
+    <button id="themeToggle" aria-label="Tema değiştir">🌙</button>
+  </header>
+
+  <!-- Çevrimdışı uyarı bandı -->
+  <div id="offlineBanner" class="offline-banner hidden">
+    ⚠️ İnternet bağlantısı yok. Lütfen bağlantınızı kontrol edin.
+  </div>
+
+  <main>
+    <!-- Arama Alanı -->
+    <section class="search-section">
+      <input
+        type="text"
+        id="cityInput"
+        placeholder="Şehir adı girin (örn: İstanbul)"
+        autocomplete="off"
+      />
+      <button id="searchBtn">Ara</button>
+      <button id="locationBtn" title="Konumumu kullan">📍</button>
+    </section>
+
+    <div id="errorMsg" class="error hidden"></div>
+    <div id="loading" class="loading hidden">Yükleniyor...</div>
+
+    <!-- Güncel Hava Durumu -->
+    <section id="currentWeather" class="current-weather hidden">
+      <h2 id="cityName"></h2>
+      <div class="current-main">
+        <img id="currentIcon" src="" alt="Hava durumu ikonu" />
+        <div class="current-temp">
+          <span id="currentTemp">--</span>°C
+        </div>
+      </div>
+      <p id="currentDesc" class="desc"></p>
+      <div class="details">
+        <div class="detail-card">
+          <span class="label">💧 Nem</span>
+          <span id="humidity">--</span>%
+        </div>
+        <div class="detail-card">
+          <span class="label">💨 Rüzgâr</span>
+          <span id="wind">--</span> km/s
+        </div>
+      </div>
+      <p class="update-time">Son güncelleme: <span id="updateTime">--</span></p>
+    </section>
+
+    <!-- 5 Günlük Tahmin -->
+    <section id="forecast" class="forecast hidden">
+      <h3>5 Günlük Tahmin</h3>
+      <div id="forecastList" class="forecast-list"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
